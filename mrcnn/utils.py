@@ -323,20 +323,23 @@ def pretty_plot_confusion_matrix(df_cm, annot=True, cmap="Oranges", fmt='.2f', f
 #
 
 def plot_confusion_matrix_from_data(y_test, predictions, columns=None, annot=True, cmap="Oranges",
-      fmt='.2f', fz=11, lw=0.5, cbar=False, figsize=[36,36], show_null_values=0, pred_val_axis='lin'):
+      fmt='.2f', fz=11, lw=0.5, cbar=False, figsize=[24,24], show_null_values=0, pred_val_axis='lin'):
     """
         plot confusion matrix function with y_test (actual values) and predictions (predic),
         whitout a confusion matrix yet
-        return the tp, fp and fn
+        return the tp, fp and fn to calculate the average precision 
     """
+    from sklearn.metrics import confusion_matrix
+    from pandas import DataFrame
 
     #data
+    if(not columns):
+        #labels axis integer:
+        columns = range(1, len(np.unique(y_test))+1)
+        #labels axis string:
+        #from string import ascii_uppercase
+        #columns = ['class %s' %(i) for i in list(ascii_uppercase)[0:len(np.unique(y_test))]]
     
-    columns = range(1, len(np.unique(y_test)))
-    
-    y_test = np.array(y_test)
-    predictions = np.array(predictions)
-    #confusion matrix 
     confm = confusion_matrix(y_test, predictions)
     num_classes = len(np.unique(y_test))
     
@@ -351,14 +354,29 @@ def plot_confusion_matrix_from_data(y_test, predictions, columns=None, annot=Tru
         for j in range(confm.shape[1]):
             if i==j:
                 tp[i]+=confm[i][j]
-    
-    #plot
-    df_cm = DataFrame(confm, index=columns, columns=columns)
 
-    pretty_plot_confusion_matrix(df_cm, fz=fz, cmap=cmap, figsize=figsize, show_null_values=show_null_values, 
-        pred_val_axis=pred_val_axis, lw=lw, fmt=fmt)
+    
+    #cmap = 'Oranges';
+    #fz = 24;
+    #figsize=[24,24];
+    #show_null_values = 2
+    df_cm = DataFrame(confm, index=columns, columns=columns)
+    '''
+    true_pos = np.diag(confm) 
+    precision = np.sum(true_pos / np.sum(confm, axis=0))
+    recall = np.sum(true_pos / np.sum(confm, axis=1))
+    '''
+    """
+    tp_and_fn = confm.sum(1)
+    tp_and_fp = confm.sum(0)
+    tp = confm.diagonal()
+    precision = tp / tp_and_fp
+    recall = tp / tp_and_fn
+    """
+    pretty_plot_confusion_matrix(df_cm, fz=fz, cmap=cmap, figsize=figsize, show_null_values=show_null_values, pred_val_axis=pred_val_axis)
     
     return tp, fp, fn
+
 
 ############################################################
 #  Bounding Boxes
