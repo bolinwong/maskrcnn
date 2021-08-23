@@ -409,7 +409,7 @@ def plot_confusion_matrix_from_data(y_test, predictions, columns=None, annot=Tru
         #columns = ['class %s' %(i) for i in list(ascii_uppercase)[0:len(np.unique(y_test))]]
     
     confm = confusion_matrix(y_test, predictions)
-    num_classes = len(np.unique(y_test))
+    num_classes = 3
     
     #compute tp fn fp 
     
@@ -428,7 +428,7 @@ def plot_confusion_matrix_from_data(y_test, predictions, columns=None, annot=Tru
     #fz = 24;
     #figsize=[24,24];
     #show_null_values = 2
-    df_cm = DataFrame(confm, index=columns, columns=columns)
+    df_cm = DataFrame(confm, index=3, columns=3)
     '''
     true_pos = np.diag(confm) 
     precision = np.sum(true_pos / np.sum(confm, axis=0))
