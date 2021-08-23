@@ -332,13 +332,13 @@ def plot_confusion_matrix_from_data(y_test, predictions, columns=None, annot=Tru
 
     #data
     if(not columns):
-        columns = ['class %s' %(i) for i in list(ascii_uppercase)[0:max(len(np.unique(y_test)),len(np.unique(predictions)))]]
+        columns = range(1, len(np.unique(y_test))+1)
     
     y_test = np.array(y_test)
     predictions = np.array(predictions)
     #confusion matrix 
     confm = confusion_matrix(y_test, predictions)
-    num_classes = len(columns)
+    num_classes = len(columns) 
     
     #compute tp fn fp 
     
@@ -353,7 +353,7 @@ def plot_confusion_matrix_from_data(y_test, predictions, columns=None, annot=Tru
                 tp[i]+=confm[i][j]
     
     #plot
-    df_cm = DataFrame(confm, index=columns+1, columns=columns+1)
+    df_cm = DataFrame(confm, index=columns, columns=columns)
 
     pretty_plot_confusion_matrix(df_cm, fz=fz, cmap=cmap, figsize=figsize, show_null_values=show_null_values, 
         pred_val_axis=pred_val_axis, lw=lw, fmt=fmt)
