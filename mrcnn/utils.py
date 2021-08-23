@@ -332,7 +332,7 @@ def plot_confusion_matrix_from_data(y_test, predictions, columns=None, annot=Tru
 
     #data
     if(not columns):
-        columns = ['class %s' %(i) for i in list(ascii_uppercase)[0:max(len(np.unique(y_test))+1,len(np.unique(predictions))+1)]]
+        columns = ['class %s' %(i) for i in list(ascii_uppercase)[0:max(len(np.unique(y_test))+1,len(np.unique(predictions)))]]
     
     y_test = np.array(y_test)
     predictions = np.array(predictions)
