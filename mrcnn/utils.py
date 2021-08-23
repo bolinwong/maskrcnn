@@ -403,7 +403,7 @@ def plot_confusion_matrix_from_data(y_test, predictions, columns=None, annot=Tru
     #data
     if(not columns):
         #labels axis integer:
-        columns = range(1, len(np.unique(y_test))+1)
+        columns = range(1, len(np.unique(y_test)))
         #labels axis string:
         #from string import ascii_uppercase
         #columns = ['class %s' %(i) for i in list(ascii_uppercase)[0:len(np.unique(y_test))]]
