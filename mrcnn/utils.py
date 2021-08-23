@@ -331,8 +331,8 @@ def plot_confusion_matrix_from_data(y_test, predictions, columns=None, annot=Tru
     """
 
     #data
-    if(not columns):
-        columns = range(1, len(np.unique(y_test))+1)
+    
+    columns = range(1, len(np.unique(y_test)))
     
     y_test = np.array(y_test)
     predictions = np.array(predictions)
