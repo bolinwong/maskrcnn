@@ -338,7 +338,7 @@ def plot_confusion_matrix_from_data(y_test, predictions, columns=None, annot=Tru
     predictions = np.array(predictions)
     #confusion matrix 
     confm = confusion_matrix(y_test, predictions)
-    num_classes = 3
+    num_classes = len(np.unique(y_test))
     
     #compute tp fn fp 
     
