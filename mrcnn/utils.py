@@ -428,7 +428,7 @@ def plot_confusion_matrix_from_data(y_test, predictions, columns=None, annot=Tru
     #fz = 24;
     #figsize=[24,24];
     #show_null_values = 2
-    df_cm = DataFrame(confm, index=3, columns=3)
+    df_cm = DataFrame(confm, index=columns, columns=columns)
     '''
     true_pos = np.diag(confm) 
     precision = np.sum(true_pos / np.sum(confm, axis=0))
